@@ -4,4 +4,3 @@ Pillow==10.3.0
 streamlit==1.34.0
 streamlit_webrtc==0.47.7
 tensorflow==2.16.0rc0
-tensorflow_intel==2.16.0rc0
