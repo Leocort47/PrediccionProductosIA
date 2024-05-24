@@ -85,15 +85,15 @@ def main():
         - Imágenes propias
         """)
 
-    # Botón para descargar imágenes de prueba
-    if st.sidebar.button('Descargar imágenes de prueba'):
+   if st.sidebar.button('Descargar imágenes de prueba'):
         zip_file = 'imagenes_prueba.zip'
         with zipfile.ZipFile(zip_file, 'w') as zf:
             for folder, subfolders, files in os.walk('path_to_your_images'):
                 for file in files:
                     zf.write(os.path.join(folder, file), os.path.relpath(os.path.join(folder, file), 'path_to_your_images'))
         st.sidebar.success(f"Imágenes de prueba descargadas: {zip_file}")
-        st.sidebar.download_button('Descargar imágenes de prueba', zip_file)
+        with open(zip_file, "rb") as f:
+            st.sidebar.download_button('Descargar imágenes de prueba', f, file_name=zip_file)
 
 if __name__ == "__main__":
     main()
