@@ -3,6 +3,8 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import cv2
+import zipfile
+import os
 
 # Cargar el modelo entrenado y las clases
 model = tf.keras.models.load_model('best_model.keras')
@@ -39,6 +41,16 @@ def take_photo():
     cap.release()
     cv2.destroyAllWindows()
     return img_name
+
+# Función para crear un archivo ZIP con imágenes de prueba
+def create_zip():
+    with zipfile.ZipFile("imagenes_prueba.zip", 'w') as zipf:
+        for folder, subfolders, files in os.walk("path/to/your/test_images"):
+            for file in files:
+                zipf.write(os.path.join(folder, file),
+                           os.path.relpath(os.path.join(folder, file),
+                                           "path/to/your/test_images"))
+    return "imagenes_prueba.zip"
 
 def main():
     st.set_page_config(page_title="Proyecto IA - Leandro Cortes", layout="wide")
@@ -107,7 +119,7 @@ def main():
                     img = Image.open(file_path)
                     st.image(img, caption="Foto tomada", use_column_width=True)
                     st.write(
-                        "Esta imagen pertenece a la clase {} ."
+                        "Esta imagen pertenece a la clase {} con una confianza de {:.2f} %."
                         .format(class_names[np.argmax(score)], 100 * np.max(score))
                     )
 
@@ -121,6 +133,20 @@ def main():
         - Roboflow
         - Imagenes propias
         """)
+        
+        # Botón para descargar imágenes de prueba
+        if st.button("Descargar imágenes de prueba"):
+            zip_path = create_zip()
+            with open(zip_path, "rb") as fp:
+                btn = st.download_button(
+                    label="Descargar imágenes de prueba",
+                    data=fp,
+                    file_name="imagenes_prueba.zip",
+                    mime="application/zip"
+                )
 
 if __name__ == "__main__":
     main()
+
+      
+       
