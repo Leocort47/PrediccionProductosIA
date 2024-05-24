@@ -1,5 +1,3 @@
-
-       
 import streamlit as st
 import tensorflow as tf
 import numpy as np
@@ -9,16 +7,24 @@ import os
 import zipfile
 
 # Cargar el modelo entrenado y las clases
-model = tf.keras.models.load_model('best_model.keras')
-class_names = np.loadtxt('clases.txt', dtype=str).tolist()
+@st.cache_resource
+def load_model():
+    return tf.keras.models.load_model('best_model.keras')
+
+@st.cache_data
+def load_classes():
+    return np.loadtxt('clases.txt', dtype=str).tolist()
+
+model = load_model()
+class_names = load_classes()
 
 # Parámetros de la imagen
 img_height = 180
 img_width = 180
 
 # Función para cargar y preprocesar una imagen
-def load_and_preprocess_image(image_path, img_height, img_width):
-    img = Image.open(image_path).resize((img_height, img_width))
+def load_and_preprocess_image(image, img_height, img_width):
+    img = Image.open(image).resize((img_height, img_width))
     img_array = np.array(img) / 255.0
     img_array = np.expand_dims(img_array, 0)  # Crear un batch
     return img_array
