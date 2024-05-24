@@ -4,5 +4,3 @@ Pillow==10.3.0
 streamlit==1.34.0
 tensorflow==2.16.0rc0
 opencv-python-headless==4.9.0.80
-os
-zipfile
