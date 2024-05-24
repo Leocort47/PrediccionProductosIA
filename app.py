@@ -22,6 +22,12 @@ def load_and_preprocess_image(image_path, img_height, img_width):
     img_array = np.array(img) / 255.0
     img_array = np.expand_dims(img_array, 0)  # Crear un batch
     return img_array
+def zip_folder(folder_path, output_path):
+    with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for root, dirs, files in os.walk(folder_path):
+            for file in files:
+                zipf.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), folder_path))
+
 
 def main():
     # Título y subtítulo
