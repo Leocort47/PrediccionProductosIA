@@ -5,6 +5,9 @@ from PIL import Image
 import os
 import zipfile
 
+# Configuración de la página
+st.set_page_config(page_title="Proyecto IA - Leandro Cortes", layout="wide")
+
 # Cargar el modelo entrenado y las clases
 model = tf.keras.models.load_model('best_model.keras')
 class_names = np.loadtxt('clases.txt', dtype=str).tolist()
@@ -21,8 +24,6 @@ def load_and_preprocess_image(image_path, img_height, img_width):
     return img_array
 
 def main():
-    st.set_page_config(page_title="Proyecto IA - Leandro Cortes", layout="wide")
-
     # Título y subtítulo
     st.title("Proyecto IA - Leandro Cortes")
     st.subheader("Reconocimiento de Productos de Supermercado")
@@ -95,6 +96,4 @@ def main():
         st.sidebar.download_button('Descargar imágenes de prueba', zip_file)
 
 if __name__ == "__main__":
-    main()
-
     main()
