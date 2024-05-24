@@ -74,7 +74,7 @@ def main():
                 img = Image.open(uploaded_file)
                 st.image(img, caption="Imagen subida", use_column_width=True)
                 st.write(
-                    "Esta imagen pertenece a la clase {} con una confianza de {:.2f} %."
+                    "Esta imagen pertenece a la clase {} ."
                     .format(class_names[np.argmax(score)], 100 * np.max(score))
                 )
             except Exception as e:
